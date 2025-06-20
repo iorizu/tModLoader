@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36212.18 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terraria", "..\src\Terraria\Terraria\Terraria.csproj", "{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tDataExtractor", "tDataExtractor\tDataExtractor.csproj", "{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReLogic", "..\src\Terraria\ReLogic\ReLogic.csproj", "{E28A11A3-7281-6391-B37C-6A756D5BFB97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		LinuxRelease|Any CPU = LinuxRelease|Any CPU
+		LinuxServerRelease|Any CPU = LinuxServerRelease|Any CPU
+		MacRelease|Any CPU = MacRelease|Any CPU
+		MacServerRelease|Any CPU = MacServerRelease|Any CPU
+		WindowsDebug|Any CPU = WindowsDebug|Any CPU
+		WindowsRelease|Any CPU = WindowsRelease|Any CPU
+		WindowsServerDebug|Any CPU = WindowsServerDebug|Any CPU
+		WindowsServerRelease|Any CPU = WindowsServerRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.LinuxRelease|Any CPU.ActiveCfg = LinuxRelease|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.LinuxRelease|Any CPU.Build.0 = LinuxRelease|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.LinuxServerRelease|Any CPU.ActiveCfg = LinuxServerRelease|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.LinuxServerRelease|Any CPU.Build.0 = LinuxServerRelease|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.MacRelease|Any CPU.ActiveCfg = MacRelease|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.MacRelease|Any CPU.Build.0 = MacRelease|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.MacServerRelease|Any CPU.ActiveCfg = MacServerRelease|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.MacServerRelease|Any CPU.Build.0 = MacServerRelease|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.WindowsDebug|Any CPU.ActiveCfg = WindowsDebug|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.WindowsDebug|Any CPU.Build.0 = WindowsDebug|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.WindowsRelease|Any CPU.ActiveCfg = WindowsRelease|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.WindowsRelease|Any CPU.Build.0 = WindowsRelease|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.WindowsServerDebug|Any CPU.ActiveCfg = WindowsServerDebug|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.WindowsServerDebug|Any CPU.Build.0 = WindowsServerDebug|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.WindowsServerRelease|Any CPU.ActiveCfg = WindowsServerRelease|Any CPU
+		{FCAB69ED-5561-98E7-997F-B3CDB3F34DD2}.WindowsServerRelease|Any CPU.Build.0 = WindowsServerRelease|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.LinuxRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.LinuxRelease|Any CPU.Build.0 = Release|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.LinuxServerRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.LinuxServerRelease|Any CPU.Build.0 = Release|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.MacRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.MacRelease|Any CPU.Build.0 = Release|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.MacServerRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.MacServerRelease|Any CPU.Build.0 = Release|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.WindowsDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.WindowsDebug|Any CPU.Build.0 = Debug|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.WindowsRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.WindowsRelease|Any CPU.Build.0 = Release|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.WindowsServerDebug|Any CPU.ActiveCfg = Release|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.WindowsServerDebug|Any CPU.Build.0 = Release|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.WindowsServerRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{29A2519D-BAD9-4F79-8706-DF7A417D5FB4}.WindowsServerRelease|Any CPU.Build.0 = Release|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.LinuxRelease|Any CPU.ActiveCfg = LinuxRelease|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.LinuxRelease|Any CPU.Build.0 = LinuxRelease|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.LinuxServerRelease|Any CPU.ActiveCfg = LinuxServerRelease|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.LinuxServerRelease|Any CPU.Build.0 = LinuxServerRelease|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.MacRelease|Any CPU.ActiveCfg = MacRelease|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.MacRelease|Any CPU.Build.0 = MacRelease|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.MacServerRelease|Any CPU.ActiveCfg = MacServerRelease|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.MacServerRelease|Any CPU.Build.0 = MacServerRelease|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.WindowsDebug|Any CPU.ActiveCfg = WindowsDebug|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.WindowsDebug|Any CPU.Build.0 = WindowsDebug|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.WindowsRelease|Any CPU.ActiveCfg = WindowsRelease|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.WindowsRelease|Any CPU.Build.0 = WindowsRelease|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.WindowsServerDebug|Any CPU.ActiveCfg = WindowsServerDebug|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.WindowsServerDebug|Any CPU.Build.0 = WindowsServerDebug|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.WindowsServerRelease|Any CPU.ActiveCfg = WindowsServerRelease|Any CPU
+		{E28A11A3-7281-6391-B37C-6A756D5BFB97}.WindowsServerRelease|Any CPU.Build.0 = WindowsServerRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8FDFB887-8AC3-453E-86EE-94CB84231066}
+	EndGlobalSection
+EndGlobal
