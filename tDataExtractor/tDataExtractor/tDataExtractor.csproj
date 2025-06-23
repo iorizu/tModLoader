@@ -42,7 +42,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ItemDictionary.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="RecipeDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Terraria\Terraria\Terraria.csproj">
