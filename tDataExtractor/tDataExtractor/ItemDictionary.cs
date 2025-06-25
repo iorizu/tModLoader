@@ -2,25 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
+using System.Text.Json.Serialization;
 
 namespace tDataExtractor
 {
 	internal class ItemDictionary
 	{
+		[JsonInclude]
 		internal List<ItemDef> itemDefs;
 
 		internal ItemDictionary()
 		{
-			itemDefs = LoadItems().ToList();
+			itemDefs = GetItems().ToList();
 		}
 
-		internal ItemDef GetItem(ItemId itemId)
-		{
-			return itemDefs.Find((itemDef) => itemDef.id == itemId.id);
-		}
-
-		private static IEnumerable<ItemDef> LoadItems()
+		private static IEnumerable<ItemDef> GetItems()
 		{
 			return typeof(Terraria.ID.ItemID)
 				.GetFields(BindingFlags.Public | BindingFlags.Static)
@@ -38,28 +34,15 @@ namespace tDataExtractor
 
 	internal class ItemDef
 	{
+		[JsonInclude]
 		internal readonly short id;
+		[JsonInclude]
 		internal readonly string name;
 
 		internal ItemDef(short id, string name)
 		{
 			this.id = id;
 			this.name = name;
-		}
-
-		internal ItemId GetId()
-		{
-			return new ItemId(id);
-		}
-	}
-
-	internal class ItemId
-	{
-		internal short id;
-
-		internal ItemId(short id)
-		{
-			this.id = id;
 		}
 	}
 }
