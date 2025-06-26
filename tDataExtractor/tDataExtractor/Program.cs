@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -14,25 +16,30 @@ namespace tDataExtractor
 				return;
 			}
 
-			var extractOpts = ExtractOpts.Parse(args[0]);
-			var outputPath = args[1];
+			var extractOptsRaw = args.Take(args.Length - 1);
+			var extractOpts = ExtractOpts.Parse(extractOptsRaw);
 
+			var outputPath = args.Last();
 			if (!Directory.Exists(outputPath)) {
 				Directory.CreateDirectory(outputPath);
 			}
 
 			SetupContext(outputPath);
 
+			var jsonOpts = new JsonSerializerOptions() {
+				WriteIndented = true
+			};
+
 			if (extractOpts.extractItems) {
-				var items = JsonSerializer.Serialize(new ItemDictionary());
+				var items = JsonSerializer.Serialize(new ItemDictionary(), jsonOpts);
 				File.WriteAllText(Path.Combine(outputPath, "items.json"), items);
 			}
 			if (extractOpts.extractRecipes) {
-				var recipes = JsonSerializer.Serialize(new RecipeDictionary());
+				var recipes = JsonSerializer.Serialize(new RecipeDictionary(), jsonOpts);
 				File.WriteAllText(Path.Combine(outputPath, "recipes.json"), recipes);
 			}
 			if (extractOpts.extractTiles) {
-				var tiles = JsonSerializer.Serialize(new TileDictionary());
+				var tiles = JsonSerializer.Serialize(new TileDictionary(), jsonOpts);
 				File.WriteAllText(Path.Combine(outputPath, "tiles.json"), tiles);
 			}
 		}
@@ -69,37 +76,31 @@ namespace tDataExtractor
 		}
 	}
 
-
 	internal struct ExtractOpts
 	{
 		internal bool extractItems;
 		internal bool extractRecipes;
 		internal bool extractTiles;
 
-		internal static ExtractOpts Parse(string input)
+		internal static ExtractOpts Parse(IEnumerable<string> input)
 		{
-			if (input[0] != '-') {
-				throw new ArgumentException("First option must be a type specfifier");
-			}
-
-			string options = input.Substring(1);
 			bool extractItems = false;
 			bool extractRecipes = false;
 			bool extractTiles = false;
 
-			foreach (char c in options) {
-				switch (c) {
-					case 'i':
+			foreach (string option in input) {
+				switch (option) {
+					case "-i":
 						extractItems = true;
 						break;
-					case 'r':
+					case "-r":
 						extractRecipes = true;
 						break;
-					case 't':
+					case "-t":
 						extractTiles = true;
 						break;
 					default:
-						throw new ArgumentException($"Invalid type specifier found: {c}");
+						throw new ArgumentException($"Invalid type specifier found: {option}");
 				}
 			}
 
