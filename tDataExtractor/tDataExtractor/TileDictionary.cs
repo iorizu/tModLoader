@@ -28,7 +28,7 @@ namespace tDataExtractor
 					}
 					return false;
 				})
-				.Select((fieldInfo) => new TileDef((ushort)fieldInfo.GetRawConstantValue(), fieldInfo.Name));
+				.Select(TileDef.CreateNewTileDef);
 		}
 	}
 
@@ -39,10 +39,15 @@ namespace tDataExtractor
 		[JsonInclude]
 		internal readonly string name;
 
-		internal TileDef(ushort id, string name)
+		private TileDef(ushort id, string name)
 		{
 			this.id = id;
 			this.name = name;
+		}
+
+		internal static TileDef CreateNewTileDef(FieldInfo fieldInfo)
+		{
+			return new TileDef((ushort)fieldInfo.GetRawConstantValue(), fieldInfo.Name);
 		}
 	}
 }

@@ -6,8 +6,8 @@ using Terraria;
 
 namespace tDataExtractor
 {
-    internal static class Program
-    {
+	internal static class Program
+	{
 		public static void Main(string[] args)
 		{
 			if (args.Length == 0) {
@@ -51,20 +51,24 @@ namespace tDataExtractor
 
 		private static void SetupMain()
 		{
-			Terraria.Main.netMode = 0; // SinglePlayer = https://docs.tmodloader.net/docs/stable/class_netmode_i_d.html
-			Terraria.Main.myPlayer = 0;
+			Terraria.Main.netMode = 0; // netMode.SinglePlayer = 0 https://docs.tmodloader.net/docs/stable/class_netmode_i_d.html
+			Terraria.Main.myPlayer = 0; // Index into player array
 			Terraria.Main.player[0] = new Terraria.Player {
 				hairColor = new Color(0, 0, 0),
 				skinColor = new Color(0, 0, 0),
 				shirtColor = new Color(0, 0, 0),
 				pantsColor = new Color(0, 0, 0)
 			};
+			// Initialize one Item so that, when we create Items in ItemDictionary to extract their properties, the program doesn't crash
+			Terraria.Main.item[0] = new Terraria.Item();
 
+			// Initialize all recipes (like it is done in Main.Initialize_AlmostEverything()) so that Recipe.SetupRecipes()->ShimmerTransforms.UpdateRecipeSets() doesn't crash
 			for (int j = 0; j < Recipe.maxRecipes; j++) {
 				Terraria.Main.recipe[j] = new Recipe();
 			}
 		}
 	}
+
 
 	internal struct ExtractOpts
 	{

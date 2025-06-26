@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json.Serialization;
+using Terraria;
 
 namespace tDataExtractor
 {
@@ -17,33 +19,9 @@ namespace tDataExtractor
 		internal static IEnumerable<RecipeDef> GetRecipes()
 		{
 			Terraria.Recipe.SetupRecipes();
-			foreach (var recipe in Terraria.Main.recipe.Where((recipe) => recipe.createItem.type > 0)) {
-				var recipeDef = new RecipeDef((short)recipe.createItem.type, recipe.createItem.stack) {
-					needHoney = recipe.needHoney,
-					needWater = recipe.needWater,
-					needLava = recipe.needLava,
-					anyWood = recipe.anyWood,
-					anyIronBar = recipe.anyIronBar,
-					anyPressurePlate = recipe.anyPressurePlate,
-					anySand = recipe.anySand,
-					anyFragment = recipe.anyFragment,
-					alchemy = recipe.alchemy,
-					needSnowBiome = recipe.needSnowBiome,
-					needGraveyardBiome = recipe.needGraveyardBiome,
-					needEverythingSeed = recipe.needEverythingSeed,
-					notDecraftable = recipe.notDecraftable,
-					crimson = recipe.crimson,
-					corruption = recipe.corruption
-				};
-				foreach (var requiredItem in recipe.requiredItem.Where((reqItem) => reqItem.stack > 0)) {
-					var recipeInput = new RecipeInput((short)requiredItem.type, requiredItem.stack);
-					recipeDef.recipeInputs.Add(recipeInput);
-				}
-				foreach (var requiredTileId in recipe.requiredTile.Where((reqTile) => reqTile > 0)) {
-					recipeDef.requiredTiles.Add(requiredTileId);
-				}
-				yield return recipeDef;
-			}
+			return Terraria.Main.recipe
+				.Where((recipe) => recipe.createItem.type > 0)
+				.Select(RecipeDef.CreateNewRecipeDef);
 		}
 	}
 
@@ -90,12 +68,38 @@ namespace tDataExtractor
 		[JsonInclude]
 		internal List<int> requiredTiles = null;
 
-		internal RecipeDef(short itemId, int stack)
+		private RecipeDef(short itemId, int stack)
 		{
 			this.itemId = itemId;
 			this.stack = stack;
-			recipeInputs = new List<RecipeInput>();
-			requiredTiles = new List<int>();
+		}
+
+		internal static RecipeDef CreateNewRecipeDef(Terraria.Recipe recipe)
+		{
+			return new RecipeDef((short)recipe.createItem.type, recipe.createItem.stack) {
+				needHoney = recipe.needHoney,
+				needWater = recipe.needWater,
+				needLava = recipe.needLava,
+				anyWood = recipe.anyWood,
+				anyIronBar = recipe.anyIronBar,
+				anyPressurePlate = recipe.anyPressurePlate,
+				anySand = recipe.anySand,
+				anyFragment = recipe.anyFragment,
+				alchemy = recipe.alchemy,
+				needSnowBiome = recipe.needSnowBiome,
+				needGraveyardBiome = recipe.needGraveyardBiome,
+				needEverythingSeed = recipe.needEverythingSeed,
+				notDecraftable = recipe.notDecraftable,
+				crimson = recipe.crimson,
+				corruption = recipe.corruption,
+				recipeInputs = recipe.requiredItem
+					.Where((reqItem) => reqItem.stack > 0)
+					.Select((requiredItem) => new RecipeInput((short)requiredItem.type, requiredItem.stack))
+					.ToList(),
+				requiredTiles = recipe.requiredTile
+					.Where((reqTile) => reqTile > 0)
+					.ToList()
+			};
 		}
 	}
 
