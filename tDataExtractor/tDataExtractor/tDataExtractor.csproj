@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="ItemDictionary.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectileDictionary.cs" />
+    <Compile Include="RarityDictionary.cs" />
     <Compile Include="RecipeDictionary.cs" />
     <Compile Include="TileDictionary.cs" />
   </ItemGroup>

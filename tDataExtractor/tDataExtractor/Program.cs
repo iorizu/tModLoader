@@ -42,6 +42,14 @@ namespace tDataExtractor
 				var tiles = JsonSerializer.Serialize(new TileDictionary(), jsonOpts);
 				File.WriteAllText(Path.Combine(outputPath, "tiles.json"), tiles);
 			}
+			if (extractOpts.extractProjectiles) {
+				var projectiles = JsonSerializer.Serialize(new ProjectileDictionary(), jsonOpts);
+				File.WriteAllText(Path.Combine(outputPath, "projectiles.json"), projectiles);
+			}
+			if (extractOpts.extractRarities) {
+				var rarities = JsonSerializer.Serialize(new RarityDictionary(), jsonOpts);
+				File.WriteAllText(Path.Combine(outputPath, "rarities.json"), rarities);
+			}
 		}
 
 		private static void SetupContext(string outputPath)
@@ -81,12 +89,16 @@ namespace tDataExtractor
 		internal bool extractItems;
 		internal bool extractRecipes;
 		internal bool extractTiles;
+		internal bool extractProjectiles;
+		internal bool extractRarities;
 
 		internal static ExtractOpts Parse(IEnumerable<string> input)
 		{
 			bool extractItems = false;
 			bool extractRecipes = false;
 			bool extractTiles = false;
+			bool extractProjectiles = false;
+			bool extractRarities = false;
 
 			foreach (string option in input) {
 				switch (option) {
@@ -99,6 +111,12 @@ namespace tDataExtractor
 					case "-t":
 						extractTiles = true;
 						break;
+					case "-p":
+						extractProjectiles = true;
+						break;
+					case "-a":
+						extractRarities = true;
+						break;
 					default:
 						throw new ArgumentException($"Invalid type specifier found: {option}");
 				}
@@ -107,7 +125,9 @@ namespace tDataExtractor
 			return new ExtractOpts() {
 				extractItems = extractItems,
 				extractRecipes = extractRecipes,
-				extractTiles = extractTiles
+				extractTiles = extractTiles,
+				extractProjectiles = extractProjectiles,
+				extractRarities = extractRarities,
 			};
 		}
 	}
