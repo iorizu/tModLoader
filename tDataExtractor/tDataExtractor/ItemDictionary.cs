@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json.Serialization;
-using Terraria;
 
 namespace tDataExtractor
 {
@@ -19,6 +19,9 @@ namespace tDataExtractor
 
 		private static IEnumerable<ItemDef> GetItems()
 		{
+			GetItemsJson();
+			Terraria.Lang.InitializeLegacyLocalization();
+
 			return typeof(Terraria.ID.ItemID)
 				.GetFields(BindingFlags.Public | BindingFlags.Static)
 				.Where((fieldInfo) => fieldInfo.FieldType.Name == nameof(Int16) && fieldInfo.IsLiteral)
@@ -31,6 +34,20 @@ namespace tDataExtractor
 				})
 				.Select(ItemDef.CreateNewItemDef);
 		}
+
+		private static void GetItemsJson()
+		{
+			string cwd = Directory.GetCurrentDirectory();
+			DirectoryInfo parent = Directory.GetParent(cwd);
+
+			while (!parent.FullName.EndsWith("tModLoader")) {
+				parent = Directory.GetParent(parent.FullName);
+			}
+
+			var path = Path.Combine(parent.FullName, "src\\Terraria\\Terraria\\Localization\\Content\\en-US\\Items.json");
+			var contents = File.ReadAllText(path);
+			Terraria.Localization.LanguageManager.Instance.LoadLanguageFromFileTextJson(contents, true);	
+		}
 	}
 
 	internal class ItemDef
@@ -39,6 +56,10 @@ namespace tDataExtractor
 		internal readonly short id;
 		[JsonInclude]
 		internal readonly string name;
+		[JsonInclude]
+		internal readonly string displayName;
+		[JsonInclude]
+		internal readonly string tooltip;
 
 		// Mode
 		[JsonInclude]
@@ -55,6 +76,8 @@ namespace tDataExtractor
 		// Catagorization
 		[JsonInclude]
 		internal bool isVanity;
+		[JsonInclude]
+		internal bool isMaterial;
 		[JsonInclude]
 		internal bool isConsumable;
 		[JsonInclude]
@@ -81,7 +104,7 @@ namespace tDataExtractor
 		[JsonInclude]
 		internal int defense;
 		[JsonInclude]
-		internal int costMana;
+		internal int manaCost;
 		[JsonInclude]
 		internal int regenLife;
 		[JsonInclude]
@@ -112,20 +135,29 @@ namespace tDataExtractor
 		//internal sbyte slotBalloon;
 		#endregion
 
-		private ItemDef(short id, string name)
+		private ItemDef(short id, string name, string displayName, string tooltip)
 		{
 			this.id = id;
 			this.name = name;
+			this.displayName = displayName;
+			this.tooltip = tooltip;
 		}
 
 		internal static ItemDef CreateNewItemDef(FieldInfo fieldInfo)
 		{
 			var type = (short)fieldInfo.GetRawConstantValue();
 			var itemSlot = Terraria.Item.NewItem(null, 0, 0, 0, 0, type);
-			var item = Main.item[itemSlot];
+			var item = Terraria.Main.item[itemSlot];
 			item.active = false; // Set to false so that next call to NewItem() reuses the same slot
+			var displayName = Terraria.Lang.GetItemName(type);
+			item.RebuildTooltip();
+			var tooltipLines = new List<string>(); // More than enough for any tooltip
+			for (int i = 0; i < item.ToolTip.Lines; i++) {
+				tooltipLines.Add(item.ToolTip.GetLine(i));
+			}
+			var tooltip = string.Join("\n", tooltipLines.ToArray()); // TODO: Tooltips needs to have $-vars replaced
 
-			return new ItemDef(type, fieldInfo.Name) {
+			return new ItemDef(type, fieldInfo.Name, displayName.Value, tooltip) {
 				modeExpert = item.expert, // Ignoring Item.expertOnly because it is never set to true AFAICT
 				maxStack = item.maxStack,
 				value = item.value,
@@ -133,6 +165,7 @@ namespace tDataExtractor
 				projectileId = item.shoot, // 0 = No projectile
 				// Categorization
 				isVanity = item.vanity,
+				isMaterial = item.material, // TODO: Investigate this, it's not being set in the places I would expect
 				isConsumable = item.consumable,
 				isAccessory = item.accessory,
 				isArmor = item.wornArmor,
@@ -146,7 +179,7 @@ namespace tDataExtractor
 				knockback = item.knockBack,
 				shootSpeed = item.shootSpeed,
 				defense = item.defense,
-				costMana = item.mana,
+				manaCost = item.mana,
 				regenLife = item.lifeRegen,
 				powerPick = item.pick,
 				powerAxe = item.axe,
